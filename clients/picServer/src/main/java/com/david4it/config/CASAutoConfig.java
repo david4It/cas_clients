@@ -76,9 +76,9 @@ public class CASAutoConfig {
         initParameters.put("casServerLoginUrl", serverUrlPrefix);
         initParameters.put("serverName", clientHostUrl);
         initParameters.put("ignorePattern", ".*");
-        registration.setInitParameters(initParameters);
         //表示过滤所有
         initParameters.put("ignoreUrlPatternType", "com.david4it.config.SimpleUrlPatternMatcherStrategy");
+        registration.setInitParameters(initParameters);
         // 设定加载的顺序
         registration.setOrder(1);
         return registration;

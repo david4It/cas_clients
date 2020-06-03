@@ -12,5 +12,3 @@ cas:
   client-host-url: http://picClient.com:8088
   use-session: true
   validation-type: cas
-
-casClientLogoutUrl: https://david4it.com:8443/cas/logout?service=http://picClient.com:8088/logout
