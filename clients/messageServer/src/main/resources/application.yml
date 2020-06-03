@@ -1,0 +1,14 @@
+server:
+  port: 9099
+spring:
+  application:
+    name: msgServer
+  resources:
+    static-locations: classpath:/static/
+
+cas:
+  server-url-prefix: https://david4it.com:8443/cas
+  server-login-url: https://david4it.com:8443/cas/login
+  server-logout-url: https://david4it.com:8443/cas/logout
+  client-host-url: http://message.client.com:9099
+  client-logout-url: http://message.client.com:9090/logout

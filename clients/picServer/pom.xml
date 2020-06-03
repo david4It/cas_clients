@@ -11,5 +11,12 @@
 
     <artifactId>picServer</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.jasig.cas.client</groupId>
+            <artifactId>cas-client-support-springboot</artifactId>
+            <version>${java.cas.client.version}</version>
+        </dependency>
+    </dependencies>
 
 </project>

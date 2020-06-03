@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <link rel="shortcut icon" href="/images/favicon.ico">
+</head>
+<body>
+    <h1>欢迎访问留言系统，您的用户名是：<span style="color:red;" th:text="${#request.getUserPrincipal().getName()}"></span></h1>
+    <a href="https://david4it.com:8443/cas/logout?service=http://message.client.com:9099/logout">登出</a>
+    <br>
+    <div>这是您的私密留言信息...</div>
+    <a href="http://picclient.com:8088/index">进入相册系统</a>
+</body>
+</html>
