@@ -1,0 +1,16 @@
+server:
+  port: 8088
+spring:
+  application:
+    name: picServer
+  resources:
+    static-locations: classpath:/static/
+
+cas:
+  server-url-prefix: https://david4it.com:8443/cas
+  server-login-url: https://david4it.com:8443/cas/login
+  client-host-url: http://picClient.com:8088
+  use-session: true
+  validation-type: cas
+
+casClientLogoutUrl: https://david4it.com:8443/cas/logout?service=http://picClient.com:8088/logout
