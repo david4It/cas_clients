@@ -34,9 +34,6 @@ public class CASAutoConfig {
         registration.setFilter(new SingleSignOutFilter());
         // 设定匹配的路径
         registration.addUrlPatterns("/*");
-        Map<String,String>  initParameters = new HashMap<String, String>();
-        initParameters.put("casServerUrlPrefix", serverUrlPrefix);
-        registration.setInitParameters(initParameters);
         // 设定加载的顺序
         registration.setOrder(1);
         return registration;
@@ -75,9 +72,6 @@ public class CASAutoConfig {
         Map<String,String> initParameters = new HashMap<String, String>();
         initParameters.put("casServerLoginUrl", serverUrlPrefix);
         initParameters.put("serverName", clientHostUrl);
-        initParameters.put("ignorePattern", ".*");
-        //表示过滤所有
-        initParameters.put("ignoreUrlPatternType", "com.david4it.config.SimpleUrlPatternMatcherStrategy");
         registration.setInitParameters(initParameters);
         // 设定加载的顺序
         registration.setOrder(1);

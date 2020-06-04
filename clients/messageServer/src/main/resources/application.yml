@@ -10,5 +10,5 @@ cas:
   server-url-prefix: https://david4it.com:8443/cas
   server-login-url: https://david4it.com:8443/cas/login
   server-logout-url: https://david4it.com:8443/cas/logout
-  client-host-url: http://message.client.com:9099
-  client-logout-url: http://message.client.com:9090/logout
+  client-host-url: http://message.client.com:9099/login/cas
+  client-logout-url: http://message.client.com:9099/logout

@@ -1,18 +1,13 @@
 package com.david4it.config;
 
-import org.jasig.cas.client.authentication.AuthenticationFilter;
 import org.jasig.cas.client.session.SingleSignOutFilter;
-import org.jasig.cas.client.session.SingleSignOutHttpSessionListener;
-import org.jasig.cas.client.util.HttpServletRequestWrapperFilter;
-import org.jasig.cas.client.validation.Cas30ProxyReceivingTicketValidationFilter;
 import org.jasig.cas.client.validation.Cas30ProxyTicketValidator;
 import org.jasig.cas.client.validation.TicketValidator;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.cas.ServiceProperties;
 import org.springframework.security.cas.authentication.CasAuthenticationProvider;
@@ -20,7 +15,6 @@ import org.springframework.security.cas.web.CasAuthenticationEntryPoint;
 import org.springframework.security.cas.web.CasAuthenticationFilter;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
@@ -44,14 +38,15 @@ public class CASAutoConfig {
     @Bean
     public ServiceProperties serviceProperties() {
         ServiceProperties serviceProperties = new ServiceProperties();
+        //客户端的url地址，必须和服务器中的配置文件吻合，否则就是未认证授权的服务
         serviceProperties.setService(clientHostUrl);
-        serviceProperties.setSendRenew(false);
         return serviceProperties;
     }
 
     @Bean
     @Primary
     public AuthenticationEntryPoint authenticationEntryPoint(ServiceProperties sp) {
+        //定义登陆页面为CAS服务器
         CasAuthenticationEntryPoint entryPoint = new CasAuthenticationEntryPoint();
         entryPoint.setLoginUrl(serverLoginUrl);
         entryPoint.setServiceProperties(sp);
@@ -60,13 +55,15 @@ public class CASAutoConfig {
 
     @Bean
     public TicketValidator ticketValidator() {
+        //定义验证ticket的服务器地址
         return new Cas30ProxyTicketValidator(serverUrlPrefix);
     }
 
     @Bean
     public UserDetailsService userDetailsService() {
+        //定义内存用户，用于验证用户信息的正确性
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-        manager.createUser(User.withUsername("admin").password(new BCryptPasswordEncoder().encode("123456")).roles("USER").build());
+        manager.createUser(User.withUsername("admin").password("$2a$10$8GhWjgG4j2Ot15inivAAW.bmzAeu.If9J8HEV6j/jbI37.8GLwS2W").roles("USER").build());
         return manager;
     }
 
@@ -81,7 +78,7 @@ public class CASAutoConfig {
     }
 
     @Bean
-    public CasAuthenticationFilter casAuthenticationFilter(ServiceProperties sp, CasAuthenticationProvider provider) {
+    public CasAuthenticationFilter casAuthenticationFilter(ServiceProperties sp, AuthenticationProvider provider) {
         CasAuthenticationFilter filter = new CasAuthenticationFilter();
         filter.setServiceProperties(sp);
         filter.setAuthenticationManager(new ProviderManager(Arrays.asList(provider)));
